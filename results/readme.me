@@ -1,1 +1,48 @@
+All of the models below were trained on a limited small dataset of around 1300 line crops from the diary to be able to estimate how accurate the models would become once trained on a full dataset. This is because creating training data was very time consuming and expensive. These OCR Models are usually trained on 3-5000 to see optimal performance, despite this the models performed better than expected.
+====================
+Google Cloud Vision: One of the leading OCR models but on our dataset gave poor results. This model doesn't allow for fine tuning which lead to it's poorer performance
+--- IMG_3739_line27.png ---
+strom condidate to be this Vice Chanceller!!!
 
+--- IMG_3747_line3.png ---
+He had Unwell some mailt Imilted libere & kaltilen
+
+--- IMG_3747_line4.png ---
+2-3 weeks was drayne emere
+
+These results show the difficulty of the dataset compared to regular OCR tasks.
+====================
+TesseractOCR: Common in research, startups and offline systems. Allows for fine tuning and some limited training was performed on it.
+--- IMG_3739_line27.png ---
+I woud he a strong candicdade ts ee ther Wie Chancellor!
+
+--- IMG_3747_line3.png ---
+te had been unwell fer sont months & wis aclmithed Lilece & he thle
+
+--- IMG_3747_line4.png ---
+[DID NOT OUTPUT]
+One of the more popular models for OCR on handwriting when fine tuned, but did not perform well in this case
+====================
+TrOCR: A transformer-based OCR model developed by Microsoft, usually used in situations where fine tuning on custom datasets is needed. Unfortunately it resizes all images to 128x128 due to the rigid transformer architecture and thus performance via fine tuning was restricted. Despite this, it still gave some good results.
+--- IMG_3739_line27.png ---
+I be be strong to to to their Chancellor
+--- IMG_3747_line3.png ---
+He been unwell some & admitted blue blue blue breath &less
+--- IMG_3747_line4.png ---
+as emergency low under Mills-3 ago ago He diagnosed
+
+Note that the repeated words is due to the resizing of training data from ~2200x130 -> 128x128
+If I had moved forward with this model I would've designed the crop sizes to fit what the model expects.
+====================
+PaddleOCR: The most promising model out of the 4 after fine tuning. The model I went with is also transformer based and transcribes character by character, leading to worse looking results. However, if passed through a natural language model, results exceed all other models.
+
+PaddleOCR also had easily modifiable training code, and after removing the "Batch Normalisation" code and instead using some pretrained batch norm weights, as well as adding noise and distortions to the training data to artificially increase training dataset and adjusting config file for the training data, this increased the performance massively.
+--- IMG_3739_line27.png ---
+I woudd be a shry candidate to be thei Vite Chanellar!
+--- IMG_3747_line3.png ---
+Hw had beer unwell fr some mants & was admitted ldee & beathless
+--- IMG_3747_line4.png ---
+as an emergeray ud loo Mills 2-3 weels ago. e wa diagnerd
+Considering the character by character transcription flaws that are easily mitigated using an NLP and the small dataset, these results were very promising.
+====================
+Conclusion: In the end we went with another third party model despite the good results because all of these OCR models do not use the surrounding context (previous words) to determine the predictions and on such a difficult dataset, many phrases/words were impossible to transcribe without context. The model we went with used context and thus would always outperform these models regardless of how much fine tuning was performed and so my client chose to go forward with the third party model.
