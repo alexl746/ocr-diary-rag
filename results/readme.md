@@ -45,7 +45,7 @@ Although Tesseract is often effective on handwriting when adapted, its performan
 
 ## TrOCR
 
-A transformer-based OCR model developed by :contentReference[oaicite:1]{index=1}, usually used in situations where fine-tuning on custom datasets is needed.  
+A transformer-based OCR model developed by Microsoft, usually used in situations where fine-tuning on custom datasets is needed.  
 Unfortunately, it resizes all images to 128×128 due to its rigid architecture, which restricted fine-tuning performance.  
 Despite this, it still gave some good results.
 
