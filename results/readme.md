@@ -1,10 +1,10 @@
 # OCR Model Comparison
 
-All of the models below were trained on a limited pilot corpus of around **1,300 line crops** from the diary.  
+All of the models below were trained on a limited pilot corpus of around 1,300 line crops from the diary.  
 This smaller sample was intentionally used to estimate how well each model might perform once scaled to a full training set.  
 Since producing high-quality annotated data was time-consuming, the goal was to get an early performance signal.  
 
-Typically, OCR models are trained on **3,000–5,000 samples** to reach good performance.  
+Typically, OCR models are trained on 3,000–5,000 samples to reach good performance.  
 Despite the limited data, the models performed better than expected.
 
 ---
@@ -46,7 +46,7 @@ Although Tesseract is often effective on handwriting when adapted, its performan
 ## TrOCR
 
 A transformer-based OCR model developed by :contentReference[oaicite:1]{index=1}, usually used in situations where fine-tuning on custom datasets is needed.  
-Unfortunately, it resizes all images to **128×128** due to its rigid architecture, which restricted fine-tuning performance.  
+Unfortunately, it resizes all images to 128×128 due to its rigid architecture, which restricted fine-tuning performance.  
 Despite this, it still gave some good results.
 
 **Example Outputs:**
@@ -84,7 +84,7 @@ Considering the character-by-character transcription flaws that are easily mitig
 
 ## Conclusion
 
-In the end, we went with another **third-party model** despite the good results, because all of these OCR models do not use the **surrounding context (previous words)** to determine predictions.  
+In the end, we went with another third-party model despite the good results, because all of these OCR models do not use the surrounding context (previous words) to determine predictions.  
 
 On such a difficult dataset, many phrases/words were impossible to transcribe without context.  
 The model we ultimately chose uses context, and thus would always outperform these models regardless of how much fine-tuning was performed.
