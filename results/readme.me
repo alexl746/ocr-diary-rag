@@ -1,6 +1,6 @@
-All of the models below were trained on a limited small dataset of around 1300 line crops from the diary to be able to estimate how accurate the models would become once trained on a full dataset. This is because creating training data was very time consuming and expensive. These OCR Models are usually trained on 3-5000 to see optimal performance, despite this the models performed better than expected.
+All of the models below were trained on a limited pilot corpus of around 1,300 line crops from the diary. This smaller sample was intentionally used to estiamte how well each model might perform once scaled to a full training set. Since producing high-quality annotated data was time-consuming, the goal was to get an early performance signal. Typically, OCR models are trained on 3,000-5,000 samples to reach good performance. Despite the limited data, the models performed better than expected.
 ====================
-Google Cloud Vision: One of the leading OCR models but on our dataset gave poor results. This model doesn't allow for fine tuning which lead to it's poorer performance
+Google Cloud Vision: One of the leading OCR systems, but it produced relatively weak results on our handwriting domain. This model does not support fine-tuning, which likely contributed to the lower performance.
 --- IMG_3739_line27.png ---
 strom condidate to be this Vice Chanceller!!!
 
@@ -10,9 +10,9 @@ He had Unwell some mailt Imilted libere & kaltilen
 --- IMG_3747_line4.png ---
 2-3 weeks was drayne emere
 
-These results show the difficulty of the dataset compared to regular OCR tasks.
+These results highlight the difficulty of the problem domain compared to standard OCR tasks.
 ====================
-TesseractOCR: Common in research, startups and offline systems. Allows for fine tuning and some limited training was performed on it.
+TesseractOCR: A widely used open-source OCR engine in both research and production. It allows for fine-tuning, and I performed a small limited domain-specific training.
 --- IMG_3739_line27.png ---
 I woud he a strong candicdade ts ee ther Wie Chancellor!
 
@@ -21,9 +21,9 @@ te had been unwell fer sont months & wis aclmithed Lilece & he thle
 
 --- IMG_3747_line4.png ---
 [DID NOT OUTPUT]
-One of the more popular models for OCR on handwriting when fine tuned, but did not perform well in this case
+Although Tesseract is often effective on handwriting when adapted, its performance here was limited.
 ====================
-TrOCR: A transformer-based OCR model developed by Microsoft, usually used in situations where fine tuning on custom datasets is needed. Unfortunately it resizes all images to 128x128 due to the rigid transformer architecture and thus performance via fine tuning was restricted. Despite this, it still gave some good results.
+TrOCR: A transformer-based OCR model developed by Microsoft, usually used in situations where fine tuning on custom datasets is needed. Unfortunately it resizes all images to 128x128 due it's rigid architecture and thus performance via fine tuning was restricted. Despite this, it still gave some good results.
 --- IMG_3739_line27.png ---
 I be be strong to to to their Chancellor
 --- IMG_3747_line3.png ---
@@ -34,9 +34,8 @@ as emergency low under Mills-3 ago ago He diagnosed
 Note that the repeated words is due to the resizing of training data from ~2200x130 -> 128x128
 If I had moved forward with this model I would've designed the crop sizes to fit what the model expects.
 ====================
-PaddleOCR: The most promising model out of the 4 after fine tuning. The model I went with is also transformer based and transcribes character by character, leading to worse looking results. However, if passed through a natural language model, results exceed all other models.
-
-PaddleOCR also had easily modifiable training code, and after removing the "Batch Normalisation" code and instead using some pretrained batch norm weights, as well as adding noise and distortions to the training data to artificially increase training dataset and adjusting config file for the training data, this increased the performance massively.
+PaddleOCR: The most promising model after fine tuning. This transformer-based approach outputs characters individually, which makes raw transcriptions look noisier, but when passed through a language model, its results surpassed all other models.
+The training framework was also more flexible. By removing batch normalisation from the training code and replacing it with pretrained batch norm parameters, as well as introducing noise and distortions to augment the training corpus, I achieved a significant boost in performance.
 --- IMG_3739_line27.png ---
 I woudd be a shry candidate to be thei Vite Chanellar!
 --- IMG_3747_line3.png ---
